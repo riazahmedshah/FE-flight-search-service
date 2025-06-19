@@ -10,6 +10,8 @@ datasource db {
 model City{
   id Int @id @default(autoincrement())
   name String @unique
+  createdAt DateTime @default(now())
+  deletedAt DateTime @default(now())
   airports Airport[]
 }
 
@@ -17,6 +19,9 @@ model Airplane{
   id Int @id @default(autoincrement())
   model_number String @unique
   capacity Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  deletedAt DateTime @default(now())
   flight Flight[]
 }
 
@@ -25,6 +30,9 @@ model Airport{
   name String @unique
   city_id Int
   address String @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  deletedAt DateTime @default(now())
   city City @relation(fields: [city_id], references: [id])
 
   flight Flight[]
@@ -33,12 +41,16 @@ model Airport{
 
 model Flight{
   id Int @id @default(autoincrement())
+  flight_number String @unique
   departure_airport_id Int
   destination_airport_id Int
   airplane_id Int
   departure DateTime
   arrival DateTime
   airport_id Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  deletedAt DateTime @default(now())
 
   airplane Airplane @relation(fields: [airplane_id], references: [id])
   airport Airport @relation(fields: [airport_id], references: [id])
