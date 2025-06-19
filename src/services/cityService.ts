@@ -1,4 +1,4 @@
-import { CityRepository } from "../repositories";
+import { CityRepository } from "../repositories/exports";
 
 export class cityService{
     static async createCity(name:string){
