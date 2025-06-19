@@ -1,17 +1,21 @@
-import { Request, Response } from "express";
+import { Request, RequestHandler, Response } from "express";
 import { cityNameSchema, citySchema } from "../schemas/citySchema";
 import { cityService } from "../services/exports";
 
 export const createCity = async (req:Request, res:Response) => {
     const name = req.body.name
-    const {success,error} = await citySchema.safeParseAsync(name);
+    const Validation = await citySchema.safeParseAsync(name);
 
-    if(!success){
-        console.error(error.message)
-        return
+    if(!Validation.success){
+        console.error(Validation.error.message)
+        return res.status(400).json({
+            success: false,
+            message: "Validation failed",
+            err: Validation.error.message
+        });
     }
     try {
-        await cityService.createCity(name);
+        await cityService.createCity(Validation.data.name);
         return res.status(201).json({
             success:true,
             message:"SUCCESS",
@@ -22,7 +26,7 @@ export const createCity = async (req:Request, res:Response) => {
         return res.status(500).json({
             success:false,
             message:"FAILURE",
-            err: {error}
+            err: "Internal server error"
         })
     }
 }
@@ -53,7 +57,11 @@ export const updateCity = async (req:Request, res:Response) => {
 
     if(!success){
         console.error(error.message)
-        return
+        return res.status(400).json({
+            success: false,
+            message: "Validation failed",
+            err: error.message
+        });
     }
 
     try {
