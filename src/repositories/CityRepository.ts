@@ -38,6 +38,21 @@ export class CityRepository {
         }
     }
 
+    static async findCityByCityName(name:string){
+        try {
+            return await prisma.city.findFirst({
+                where:{
+                    name:{
+                        equals: name,
+                        mode:'insensitive'
+                    }
+                }
+            })
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
     static async updateCity(cityId:number, data:{name:string}){
         try {
             return await prisma.city.update({
