@@ -1,1 +1,9 @@
-console.log("Hello fligh-booking-app")
+import express, { urlencoded } from "express"
+
+const app = express();
+
+app.use(express.json())
+app.use(urlencoded({extended:true}))
+
+
+export { app }
