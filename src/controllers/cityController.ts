@@ -1,33 +1,41 @@
 import { Request, RequestHandler, Response } from "express";
 import { cityNameSchema, citySchema } from "../schemas/citySchema";
 import { cityService } from "../services/exports";
+import { ResponseHandler } from "../utils/ResponseHandler";
 
 export const createCity = async (req:Request, res:Response) => {
-    const name = req.body.name
-    const Validation = await citySchema.safeParseAsync(name);
+    const name = req.body
+    const {success,data,error} = await citySchema.safeParseAsync(name);
 
-    if(!Validation.success){
-        console.error(Validation.error.message)
-        return res.status(400).json({
-            success: false,
-            message: "Validation failed",
-            err: Validation.error.message
-        });
+    if(!success){
+        return ResponseHandler.zodError(res, error.errors)
     }
     try {
-        await cityService.createCity(Validation.data.name);
-        return res.status(201).json({
-            success:true,
-            message:"SUCCESS",
-            err:{}
+        const newCity = await cityService.createCity(data.name);
+        return ResponseHandler.created(res, {
+            newCity
         })
     } catch (error) {
-        console.error(error)
-        return res.status(500).json({
+        return ResponseHandler.json(res, {
             success:false,
-            message:"FAILURE",
-            err: "Internal server error"
-        })
+            message:"SUCCESS",
+            err:{}
+        },500)
+    }
+}
+
+export const getCity = async (req:Request, res:Response) => {
+    const id = Number(req.params.id)
+    try {
+        const city = await cityService.getCity(id)
+        return ResponseHandler.json(res, {city})
+    } catch (error) {
+        console.error(error)
+        return ResponseHandler.json(res, {
+            success:false,
+            message:"SUCCESS",
+            err:{}
+        },500)
     }
 }
 
@@ -35,11 +43,7 @@ export const deleteCity = async (req:Request, res:Response) => {
     const id = Number(req.params.id)
     try {
         await cityService.deleteCity(id)
-        return res.status(200).json({
-            success:true,
-            message:"SUCCESS",
-            err:{}
-        })
+        return ResponseHandler.json(res)
     } catch (error) {
         console.error(error)
         return res.status(500).json({
@@ -57,20 +61,12 @@ export const updateCity = async (req:Request, res:Response) => {
 
     if(!success){
         console.error(error.message)
-        return res.status(400).json({
-            success: false,
-            message: "Validation failed",
-            err: error.message
-        });
+        return ResponseHandler.zodError(res, error.errors)
     }
 
     try {
-        await cityService.updateCity(id, name)
-        return res.status(200).json({
-            success:true,
-            message:"SUCCESS",
-            err:{}
-        })
+        const updatedCity = await cityService.updateCity(id, name)
+        return ResponseHandler.json(res, updatedCity)
     } catch (error) {
         console.error(error)
         return res.status(500).json({
@@ -83,22 +79,3 @@ export const updateCity = async (req:Request, res:Response) => {
 
 }
 
-export const getCity = async (req:Request, res:Response) => {
-    const id = Number(req.params.id)
-
-    try {
-        await cityService.getCity(id)
-        return res.status(200).json({
-            success:true,
-            message:"SUCCESS",
-            err:{}
-        })
-    } catch (error) {
-        console.error(error)
-        return res.status(500).json({
-            success:false,
-            message:"FAILURE",
-            err: error
-        })
-    }
-}
