@@ -36,7 +36,6 @@ model Airport{
   city City @relation(fields: [city_id], references: [id])
 
   flight Flight[]
-
 }
 
 model Flight{
