@@ -57,9 +57,9 @@ export class CityRepository {
         try {
             return await prisma.city.update({
                 where:{
-                    id:cityId
+                    id:cityId,
                 },
-                data:data
+                data:data,
             })
         } catch (error) {
             
