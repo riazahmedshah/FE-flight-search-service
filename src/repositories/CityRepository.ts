@@ -62,7 +62,15 @@ export class CityRepository {
                 data:data,
             })
         } catch (error) {
-            
+            console.error(error)
+        }
+    }
+
+    static async getAllCities(){
+        try {
+            return await prisma.city.findMany();
+        } catch (error) {
+            console.error("REPOSITORY_LAYER",error)
         }
     }
 }

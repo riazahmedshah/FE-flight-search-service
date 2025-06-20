@@ -32,4 +32,12 @@ export class cityService{
             console.error(error)
         }
     }
+
+    static async getAllCities(){
+        try {
+            return await CityRepository.getAllCities();
+        } catch (error) {
+            console.error("GET_ALL_CITIES",error)
+        }
+    }
 }

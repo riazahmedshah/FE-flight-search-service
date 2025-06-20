@@ -71,7 +71,18 @@ export const updateCity = async (req:Request, res:Response) => {
             message:"ERROR_IN_UPDATING_CITY"
         },500)
     }
+}
 
-
+export const getAllCities = async (req:Request, res:Response) => {
+    try {
+        const citiesData = await cityService.getAllCities();
+        return ResponseHandler.json(res, citiesData)
+    } catch (error) {
+        console.error(error)
+        return ResponseHandler.json(res, {
+            success:false,
+            message:"ERROR_IN_GETTING_ALL_CITY"
+        },500)
+    }
 }
 

@@ -1,15 +1,9 @@
-import { createCity,deleteCity, getCity,updateCity } from "./cityController";
-
-export default{
-    createCity,
-    deleteCity,
-    getCity,
-    updateCity
-}
+import { createCity,deleteCity, getCity,updateCity,getAllCities } from "./cityController";
 
 export{
     createCity,
     deleteCity,
     getCity,
-    updateCity
+    updateCity,
+    getAllCities
 }
