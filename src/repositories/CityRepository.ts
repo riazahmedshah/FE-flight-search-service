@@ -30,8 +30,9 @@ export class CityRepository {
         try {
             return await prisma.city.findFirst({
                 where:{
-                    id:cityId
-                }
+                    id:cityId,
+                },
+                include:{airports:true}
             })
         } catch (error) {
             console.error(error)
