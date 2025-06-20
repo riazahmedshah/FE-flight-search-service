@@ -66,9 +66,20 @@ export class CityRepository {
         }
     }
 
-    static async getAllCities(){
+    static async getAllCities(filter: string){
         try {
+            if(filter){
+                return await prisma.city.findMany({
+                    where:{
+                        name:{
+                            startsWith:filter,
+                            mode:'insensitive'
+                        }
+                    }
+                })
+            }
             return await prisma.city.findMany();
+
         } catch (error) {
             console.error("REPOSITORY_LAYER",error)
         }

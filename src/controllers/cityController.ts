@@ -74,8 +74,9 @@ export const updateCity = async (req:Request, res:Response) => {
 }
 
 export const getAllCities = async (req:Request, res:Response) => {
+    const filter = req.query.filter as string
     try {
-        const citiesData = await cityService.getAllCities();
+        const citiesData = await cityService.getAllCities(filter);
         return ResponseHandler.json(res, citiesData)
     } catch (error) {
         console.error(error)

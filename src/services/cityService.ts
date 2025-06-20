@@ -1,3 +1,4 @@
+import { ParsedQs } from "qs";
 import { CityRepository } from "../repositories/exports";
 
 export class cityService{
@@ -33,9 +34,9 @@ export class cityService{
         }
     }
 
-    static async getAllCities(){
+    static async getAllCities(filter: string){
         try {
-            return await CityRepository.getAllCities();
+            return await CityRepository.getAllCities(filter);
         } catch (error) {
             console.error("GET_ALL_CITIES",error)
         }
