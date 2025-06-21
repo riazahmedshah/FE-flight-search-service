@@ -65,9 +65,10 @@ export const updateAirport = async (req:Request, res:Response) => {
 }
 
 export const deleteAirport = async (req:Request, res:Response) => {
-    const airportId = req.params
+    const id = Number(req.params.id)
     try {
-        
+        await AirportService.deleteAirport(id);
+        return ResponseHandler.json(res);
     } catch (error) {
         return ResponseHandler.json(res, {
             success:false,
