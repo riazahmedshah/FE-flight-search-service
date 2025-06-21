@@ -18,7 +18,7 @@ model City{
 model Airplane{
   id Int @id @default(autoincrement())
   model_number String @unique
-  capacity Int
+  capacity Int @default(200)
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
   deletedAt DateTime @default(now())

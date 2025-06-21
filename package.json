@@ -24,7 +24,7 @@
     "ts-node": "^10.9.2"
   },
   "prisma": {
-    "seed": "ts-node src/seeders/AirportsDataSeed.ts"
+    "seed": "ts-node src/seeders/AirplaneDataSeed.ts"
   }
 
 
