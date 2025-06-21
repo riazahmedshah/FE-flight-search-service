@@ -1,6 +1,6 @@
 import { AirportRepository } from "../repositories/AirportRepository";
 
-export class airportService{
+export class AirportService{
     static async createAirport(name:string, address:string, city_id:number,){
         try {
             return await AirportRepository.createAirport(name,address,city_id);
@@ -12,7 +12,7 @@ export class airportService{
     static async getAirport(id:number){
         try {
            const airport = await AirportRepository.getAirport(id);
-        //    if (!airport) throw new Error("Airport not found");
+           if (!airport) throw new Error("Airport not found");
            return airport;
         } catch (error) {
             console.error("Error fetching airport:", error);

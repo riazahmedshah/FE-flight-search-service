@@ -1,7 +1,6 @@
-import { ParsedQs } from "qs";
 import { CityRepository } from "../repositories/exports";
 
-export class cityService{
+export class CityService{
     static async createCity(name:string){
         try {
             return await CityRepository.createCity(name)

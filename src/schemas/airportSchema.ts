@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { AirportRepository } from "../repositories/AirportRepository";
 
-// Base name validation (sync)
+
 const airportNameBaseSchema = z.string().min(3, "Name must be at least 3 characters");
 
 const checkAirportExists = async (name: string) => {

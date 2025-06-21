@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import { cityNameSchema, citySchema } from "../schemas/citySchema";
-import { cityService } from "../services/exports";
+import { CityService } from "../services/exports";
 import { ResponseHandler } from "../utils/ResponseHandler";
 
-export const createCity = async (req:Request, res:Response): Promise<void> => {
+export const createCity = async (req:Request, res:Response) => {
     const name = req.body
     const {success,data,error} = await citySchema.safeParseAsync(name);
 
@@ -11,7 +11,7 @@ export const createCity = async (req:Request, res:Response): Promise<void> => {
         return ResponseHandler.zodError(res, error.errors)
     }
     try {
-        const newCity = await cityService.createCity(data.name);
+        const newCity = await CityService.createCity(data.name);
         return ResponseHandler.created(res, {
             newCity
         })
@@ -26,7 +26,7 @@ export const createCity = async (req:Request, res:Response): Promise<void> => {
 export const getCity = async (req:Request, res:Response) => {
     const id = Number(req.params.id)
     try {
-        const city = await cityService.getCity(id)
+        const city = await CityService.getCity(id)
         return ResponseHandler.json(res, {city})
     } catch (error) {
         console.error(error)
@@ -40,7 +40,7 @@ export const getCity = async (req:Request, res:Response) => {
 export const deleteCity = async (req:Request, res:Response) => {
     const id = Number(req.params.id)
     try {
-        await cityService.deleteCity(id)
+        await CityService.deleteCity(id)
         return ResponseHandler.json(res)
     } catch (error) {
         console.error(error)
@@ -62,7 +62,7 @@ export const updateCity = async (req:Request, res:Response) => {
     }
 
     try {
-        const updatedCity = await cityService.updateCity(id, name)
+        const updatedCity = await CityService.updateCity(id, name)
         return ResponseHandler.json(res, updatedCity)
     } catch (error) {
         console.error(error)
@@ -76,7 +76,7 @@ export const updateCity = async (req:Request, res:Response) => {
 export const getAllCities = async (req:Request, res:Response) => {
     const filter = req.query.filter as string
     try {
-        const citiesData = await cityService.getAllCities(filter);
+        const citiesData = await CityService.getAllCities(filter);
         return ResponseHandler.json(res, citiesData)
     } catch (error) {
         console.error(error)

@@ -1,5 +1,5 @@
 import express from "express"
-import {createCity,deleteCity,getAllCities,getCity, updateCity} from "../../controllers/index"
+import {createCity,deleteCity,getAllCities,getCity, updateCity} from "../../controllers/exports"
 
 export const v1Cityroutes = express.Router();
 

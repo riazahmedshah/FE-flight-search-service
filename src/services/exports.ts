@@ -1,5 +1,7 @@
-import { cityService } from "./cityService";
+import { CityService } from "./CityService";
+import { AirportService } from "./AirportService";
 
 export {
-    cityService
+    CityService,
+    AirportService
 }
