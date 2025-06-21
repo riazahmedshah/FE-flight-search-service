@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
-import { airportSchema } from "../schemas/airportSchema";
+import { airportSchema, updateAirportSchema } from "../schemas/airportSchema";
 import { ResponseHandler } from "../utils/ResponseHandler";
-import { prisma } from "../config/db";
 import { AirportService } from "../services/AirportService";
 
 export const createAirport = async (req:Request, res:Response) => {
@@ -48,9 +47,15 @@ export const getAllAirports = async (req:Request, res:Response) => {
 }
 
 export const updateAirport = async (req:Request, res:Response) => {
-    const airportId = req.params
+    const id = Number(req.params.id)
+    const {success, data, error} = updateAirportSchema.safeParse(req.body)
+    if(!success){
+        return ResponseHandler.zodError(res,error.errors);
+    }
     try {
-        
+        const {address, name} = data
+        const updatedAirport = await AirportService.updateAirport(id, name, address);
+        return ResponseHandler.json(res,updatedAirport)
     } catch (error) {
         return ResponseHandler.json(res, {
             success:false,

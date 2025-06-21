@@ -24,3 +24,8 @@ export const airportSchema = z.object({
   address: z.string().min(10, "Address must be at least 10 characters"),
   city_id: z.number().positive("City ID must be a positive number")
 });
+
+export const updateAirportSchema = z.object({
+  name: airportNameBaseSchema,
+  address: z.string().min(10, "Address must be at least 10 characters")
+});

@@ -29,7 +29,7 @@ export class AirportService{
 
     static async updateAirport(id:number, name:string, address:string){
         try {
-            return await AirportRepository.updateAirport(id, name, address);
+            return await AirportRepository.updateAirport(id, name, address,);
         } catch (error) {
             console.error("Error updating airport:", error);
         }
