@@ -47,6 +47,9 @@ model Flight{
   departure DateTime
   arrival DateTime
   airport_id Int
+  price Int
+  totalSeats Int
+  bowdingGate String?
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
   deletedAt DateTime @default(now())
