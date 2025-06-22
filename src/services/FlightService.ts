@@ -15,7 +15,7 @@ export class FlightService{
         }
     }
 
-    static async getAllFlights(filter:flightFilterProps){
+    static async getAllFlights(filter?:flightFilterProps){
         try {
             return FlightRepository.getAllFlights(filter)
         } catch (error) {

@@ -30,6 +30,14 @@ export const flightSchema = z.object({
 })
 
 export const flighFilterSchema = z.object({
-    minPrice:z.number().optional(),
-    maxPrice:z.number().optional()
-})
+  minPrice: z.coerce.number().optional(),
+  maxPrice: z.coerce.number().optional(),
+  departureAirport: z.string().optional(),
+}).refine(data => {
+  if (data.minPrice && data.maxPrice) {
+    return data.minPrice <= data.maxPrice;
+  }
+  return true;
+}, {
+  message: "minPrice must be less than or equal to maxPrice"
+});

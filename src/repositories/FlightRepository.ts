@@ -33,22 +33,18 @@ export class FlightRepository{
         }
     }
 
-    static async getAllFlights(filter:flightFilterProps){
-        try {
-            return prisma.flight.findMany({
-                where:{
-                    OR:[
-                        {
-                            price:{gte:filter.minPrice}
-                        },
-                        {
-                            price:{lte:filter.maxPrice}
-                        }
-                    ]
-                }
-            })
-        } catch (error) {
-            
-        }
+    static async getAllFlights(filter?: flightFilterProps) {
+        return prisma.flight.findMany({
+            where: filter && Object.keys(filter).length > 0 ? {
+            OR: [ // Changed from AND to OR
+                filter.minPrice ? { price: { gte: filter.minPrice } } : {},
+                filter.maxPrice ? { price: { lte: filter.maxPrice } } : {},
+                // filter.departureAirport ? { 
+                // departure_airport_id: filter.departureAirport 
+                // } : {},
+                // ... other filters
+            ].filter(condition => Object.keys(condition).length > 0) // Remove empty conditions
+            } : undefined
+        });
     }
 }
