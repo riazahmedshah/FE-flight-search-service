@@ -1,6 +1,6 @@
 import { AirplaneRepository } from "../repositories/AirplaneRepository";
 import { FlightRepository } from "../repositories/FlightRepository";
-import { flightProps } from "../types/flightTypes";
+import { flightProps,flightFilterProps } from "../types/flightTypes";
 
 export class FlightService{
     static async createFlight(data:flightProps){
@@ -10,6 +10,14 @@ export class FlightService{
                 throw new Error("Airplane not found");
             }
             return await FlightRepository.createFlight({...data, totalSeats:airplane.capacity})
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    static async getAllFlights(filter:flightFilterProps){
+        try {
+            return FlightRepository.getAllFlights(filter)
         } catch (error) {
             console.error(error)
         }

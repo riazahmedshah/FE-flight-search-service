@@ -1,5 +1,5 @@
 import { prisma } from "../config/db"
-import { flightProps } from "../types/flightTypes"
+import { flightFilterProps, flightProps } from "../types/flightTypes"
 
 
 export class FlightRepository{
@@ -30,6 +30,25 @@ export class FlightRepository{
             })
         } catch (error) {
             console.error(error)
+        }
+    }
+
+    static async getAllFlights(filter:flightFilterProps){
+        try {
+            return prisma.flight.findMany({
+                where:{
+                    OR:[
+                        {
+                            price:{gte:filter.minPrice}
+                        },
+                        {
+                            price:{lte:filter.maxPrice}
+                        }
+                    ]
+                }
+            })
+        } catch (error) {
+            
         }
     }
 }

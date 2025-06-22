@@ -28,3 +28,8 @@ export const flightSchema = z.object({
     totalSeats:z.number().optional(),
     boardingGate:z.string().optional()
 })
+
+export const flighFilterSchema = z.object({
+    minPrice:z.number().optional(),
+    maxPrice:z.number().optional()
+})

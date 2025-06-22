@@ -9,3 +9,8 @@ export interface flightProps{
     totalSeats?:number
     boardingGate?:string
 }
+
+export interface flightFilterProps{
+    minPrice?:number,
+    maxPrice?:number,
+}
