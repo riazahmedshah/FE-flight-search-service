@@ -3,6 +3,10 @@ import { flightProps } from "../types/flightTypes";
 
 export class FlightService{
     static async createFlight(data:flightProps){
-        return await FlightRepository.createFlight(data)
+        try {
+            return await FlightRepository.createFlight(data)
+        } catch (error) {
+            console.error(error)
+        }
     }
 }
