@@ -7,7 +7,6 @@ export const createFlight = async (req:Request, res:Response) => {
     const body = req.body;
     const {success,data,error} = await flightSchema.safeParseAsync(body);
     if(!success){
-        console.error("Flight Controller",error.message)
         return ResponseHandler.zodError(res,error.errors)
     }
     try {
