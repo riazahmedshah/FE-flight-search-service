@@ -1,10 +1,11 @@
 import express from "express"
-import {createCity,deleteCity,getAllCities,getCity, updateCity} from "../../controllers/exports"
+import {createCity,deleteCity,getAllCities,getCity, updateCity,createAirport} from "../../controllers/exports"
 
-export const v1Cityroutes = express.Router();
+export const v1CityRoutes = express.Router();
 
-v1Cityroutes.post("/city", createCity);
-v1Cityroutes.get("/city/:id", getCity);
-v1Cityroutes.patch("/city/:id", updateCity);
-v1Cityroutes.delete("/city/:id", deleteCity);
-v1Cityroutes.get("/allCities", getAllCities)
+// CITY ROUTES
+v1CityRoutes.post("/city", createCity);
+v1CityRoutes.get("/city/:id", getCity);
+v1CityRoutes.patch("/city/:id", updateCity);
+v1CityRoutes.delete("/city/:id", deleteCity);
+v1CityRoutes.get("/allCities", getAllCities);

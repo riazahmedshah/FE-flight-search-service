@@ -10,6 +10,18 @@ export class AirplaneRepository{
         })
     }
 
+    static async getAirplane(id:number){
+        try {
+            return await prisma.airplane.findFirst({
+                where:{
+                    id
+                }
+            })
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     static async deleteAirplane(id:number){
         return await prisma.airplane.delete({
             where:{

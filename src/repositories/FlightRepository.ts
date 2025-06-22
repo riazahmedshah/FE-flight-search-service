@@ -13,8 +13,19 @@ export class FlightRepository{
                     departure:data.departure,
                     arrival: data.arrival,
                     flight_number: data.flight_number,
-                    price:data.price,
-                    totalSeats:data.totalSeats,
+                    price:data.price
+                }
+            })
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    static async findByFlightNumber(flight_number:string){
+        try {
+            return await prisma.flight.findFirst({
+                where:{
+                    flight_number
                 }
             })
         } catch (error) {

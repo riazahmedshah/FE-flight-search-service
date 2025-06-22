@@ -5,8 +5,9 @@ import { FlightService } from "../services/FlightService";
 
 export const createFlight = async (req:Request, res:Response) => {
     const body = req.body;
-    const {success,data,error} = flightSchema.safeParse(body);
+    const {success,data,error} = await flightSchema.safeParseAsync(body);
     if(!success){
+        console.error("Flight Controller",error.message)
         return ResponseHandler.zodError(res,error.errors)
     }
     try {
@@ -15,7 +16,7 @@ export const createFlight = async (req:Request, res:Response) => {
     } catch (error) {
         return ResponseHandler.json(res,{
             success:false,
-            message:"ERROR_IN_DCREATING_FLIGHT",
+            message:"ERROR_IN_CREATING_FLIGHT",
         },500)
     }
 }

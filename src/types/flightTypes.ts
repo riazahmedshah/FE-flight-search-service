@@ -6,6 +6,6 @@ export interface flightProps{
     departure:Date
     arrival:Date
     price: number
-    totalSeats:number
-    bowdingGate?:string
+    totalSeats?:number
+    boardingGate?:string
 }
