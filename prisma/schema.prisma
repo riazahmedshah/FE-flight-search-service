@@ -38,7 +38,7 @@ model Airport{
 
 model Flight{
   id Int @id @default(autoincrement())
-  flight_number String @unique
+  flight_number String? @unique @default("FE1234")
   departure_airport_id Int
   destination_airport_id Int
   airplane_id Int

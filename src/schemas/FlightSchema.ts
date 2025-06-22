@@ -18,14 +18,12 @@ export const flight_number_schema = flight_number_base_schema.refine(
 )
 
 export const flightSchema = z.object({
-    flight_number:flight_number_schema,
     departure_airport_id:z.number().int().positive(),
     destination_airport_id:z.number().int().positive(),
     airplane_id:z.number().int().positive(),
     departure:z.coerce.date(),
     arrival:z.coerce.date(),
     price: z.number().int().positive(),
-    totalSeats:z.number().optional(),
     boardingGate:z.string().optional()
 }).superRefine((data, ctx) => {
   if(data.departure >= data.arrival){

@@ -12,7 +12,6 @@ export class FlightRepository{
                     airplane_id:data.airplane_id,
                     departure:data.departure,
                     arrival: data.arrival,
-                    flight_number: data.flight_number,
                     price:data.price
                 }
             })
@@ -34,19 +33,35 @@ export class FlightRepository{
     }
 
     static async getAllFlights(filter?: flightFilterProps) {
-        return prisma.flight.findMany({
-            where: filter && Object.keys(filter).length > 0 ? {
+        try {
+            return prisma.flight.findMany({
+                where: filter && Object.keys(filter).length > 0 ? {
+                    
+                AND: [ // Changed from AND to OR
+                    filter.minPrice ? { price: { gte: filter.minPrice } } : {},
+                    filter.maxPrice ? { price: { lte: filter.maxPrice } } : {},
+                    // filter.departureAirport ? { 
+                    // departure_airport_id: filter.departureAirport 
+                    // } : {},
+                    // ... other filters
+                ].filter(condition => Object.keys(condition).length > 0) // Remove empty conditions
+                } : undefined,
                 
-            AND: [ // Changed from AND to OR
-                filter.minPrice ? { price: { gte: filter.minPrice } } : {},
-                filter.maxPrice ? { price: { lte: filter.maxPrice } } : {},
-                // filter.departureAirport ? { 
-                // departure_airport_id: filter.departureAirport 
-                // } : {},
-                // ... other filters
-            ].filter(condition => Object.keys(condition).length > 0) // Remove empty conditions
-            } : undefined,
-            
-        });
+            });
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    static async deleteFlight(id:number){
+        try {
+            return await prisma.flight.delete({
+                where:{
+                    id
+                }
+            })
+        } catch (error) {
+            console.error(error)
+        }
     }
 }

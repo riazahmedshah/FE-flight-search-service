@@ -1,5 +1,5 @@
 export interface flightProps{
-    flight_number:string
+    flight_number?:string
     departure_airport_id:number
     destination_airport_id:number
     airplane_id:number

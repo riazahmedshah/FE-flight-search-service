@@ -2,6 +2,7 @@ import { AirplaneRepository } from "../repositories/AirplaneRepository";
 import { AirportRepository } from "../repositories/AirportRepository";
 import { FlightRepository } from "../repositories/FlightRepository";
 import { flightProps,flightFilterProps } from "../types/flightTypes";
+import { generateFlightNumber } from "../utils/helper";
 
 export class FlightService{
     static async createFlight(data:flightProps){
@@ -18,8 +19,10 @@ export class FlightService{
             if (departureAirport.id === destinationAirport.id) {
                 throw new Error('Departure and destination airports cannot be the same');
             }
-            
-            return await FlightRepository.createFlight({...data, totalSeats:airplane.capacity})
+
+            const flight_number = generateFlightNumber()
+
+            return await FlightRepository.createFlight({...data, totalSeats:airplane.capacity,flight_number})
         } catch (error) {
             console.error(error)
         }
@@ -28,6 +31,14 @@ export class FlightService{
     static async getAllFlights(filter?:flightFilterProps){
         try {
             return FlightRepository.getAllFlights(filter)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    static async deleteFlight(id:number){
+        try {
+            return await FlightRepository.deleteFlight(id)
         } catch (error) {
             console.error(error)
         }

@@ -36,3 +36,16 @@ export const getAllFlights = async (req:Request, res:Response) => {
         },500)
     }
 }
+
+export const deleteFlight = async (req:Request, res:Response) => {
+    const id = Number(req.params.id);
+    try {
+        await FlightService.deleteFlight(id)
+        return ResponseHandler.json(res)
+    } catch (error) {
+        return ResponseHandler.json(res,{
+            success:false,
+            message:"ERROR_IN_CREATING_FLIGHT",
+        },500)
+    }
+}
