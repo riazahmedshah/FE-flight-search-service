@@ -19,25 +19,52 @@ export const flight_number_schema = flight_number_base_schema.refine(
 
 export const flightSchema = z.object({
     flight_number:flight_number_schema,
-    departure_airport_id:z.number(),
-    destination_airport_id:z.number(),
-    airplane_id:z.number(),
+    departure_airport_id:z.number().int().positive(),
+    destination_airport_id:z.number().int().positive(),
+    airplane_id:z.number().int().positive(),
     departure:z.coerce.date(),
     arrival:z.coerce.date(),
-    price: z.number(),
+    price: z.number().int().positive(),
     totalSeats:z.number().optional(),
     boardingGate:z.string().optional()
+}).superRefine((data, ctx) => {
+  if(data.departure >= data.arrival){
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "Arrival must be after departure",
+      path: ["arrival"],
+    });
+  }
+
+  if(data.departure_airport_id == data.destination_airport_id){
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message:"Departure and destination airports cannot be the same",
+      path:["destination_airport_id"]
+    })
+  }
 })
 
 export const flighFilterSchema = z.object({
   minPrice: z.coerce.number().optional(),
   maxPrice: z.coerce.number().optional(),
-  departureAirport: z.string().optional(),
-}).refine(data => {
+  departureId: z.number().int().positive().optional(),
+  arrivalId:z.number().int().positive().optional()
+}).superRefine((data, ctx) => {
   if (data.minPrice && data.maxPrice) {
-    return data.minPrice <= data.maxPrice;
+    if(data.minPrice > data.maxPrice)
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message:"Minimum price should be less than Maximum price",
+      })
   }
-  return true;
-}, {
-  message: "minPrice must be less than or equal to maxPrice"
+
+  if(data.arrivalId && data.departureId){
+    if(data.arrivalId == data.departureId){
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message:"Arrival should be different from Departure",
+      })
+    }
+  }
 });

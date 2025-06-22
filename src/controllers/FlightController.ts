@@ -27,9 +27,7 @@ export const getAllFlights = async (req:Request, res:Response) => {
         return ResponseHandler.zodError(res, error.errors)
     }
     try {
-        const result = await FlightService.getAllFlights(
-            Object.keys(data).length > 0 ? data : undefined
-        )
+        const result = await FlightService.getAllFlights(data)
         return ResponseHandler.json(res, result)
     } catch (error) {
         return ResponseHandler.json(res,{

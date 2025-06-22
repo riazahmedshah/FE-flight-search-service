@@ -21,11 +21,11 @@ export const airportNameSchema = airportNameBaseSchema.refine(
 
 export const airportSchema = z.object({
   name: airportNameSchema,
-  address: z.string().min(10, "Address must be at least 10 characters"),
+  address: z.string().min(2, "Address must be at least 2 characters"),
   city_id: z.number().positive("City ID must be a positive number")
 });
 
 export const updateAirportSchema = z.object({
   name: airportNameBaseSchema,
-  address: z.string().min(10, "Address must be at least 10 characters")
+  address: z.string().min(2, "Address must be at least 2 characters")
 });

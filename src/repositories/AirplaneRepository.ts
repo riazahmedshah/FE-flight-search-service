@@ -15,7 +15,7 @@ export class AirplaneRepository{
             return await prisma.airplane.findFirst({
                 where:{
                     id
-                }
+                },
             })
         } catch (error) {
             console.error(error);
