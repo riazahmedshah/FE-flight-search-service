@@ -13,4 +13,6 @@ export interface flightProps{
 export interface flightFilterProps{
     minPrice?:number,
     maxPrice?:number,
+    departureAirport?:number,
+    arrivalAirport?:number
 }

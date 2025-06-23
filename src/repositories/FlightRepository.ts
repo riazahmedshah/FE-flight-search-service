@@ -40,14 +40,16 @@ export class FlightRepository{
             return prisma.flight.findMany({
                 where: filter && Object.keys(filter).length > 0 ? {
                     
-                AND: [ // Changed from AND to OR
+                AND: [
                     filter.minPrice ? { price: { gte: filter.minPrice } } : {},
                     filter.maxPrice ? { price: { lte: filter.maxPrice } } : {},
-                    // filter.departureAirport ? { 
-                    // departure_airport_id: filter.departureAirport 
-                    // } : {},
-                    // ... other filters
-                ].filter(condition => Object.keys(condition).length > 0) // Remove empty conditions
+                    filter.departureAirport ? { 
+                    departure_airport_id: filter.departureAirport 
+                    } : {},
+                    filter.arrivalAirport ? {
+                    destination_airport_id:filter.arrivalAirport
+                    }:{},
+                ].filter(condition => Object.keys(condition).length > 0)
                 } : undefined,
                 
             });

@@ -44,10 +44,10 @@ export const flightSchema = z.object({
 })
 
 export const flighFilterSchema = z.object({
-  minPrice: z.coerce.number().optional(),
-  maxPrice: z.coerce.number().optional(),
-  departureId: z.number().int().positive().optional(),
-  arrivalId:z.number().int().positive().optional()
+  minPrice: z.coerce.number().int().optional(),
+  maxPrice: z.coerce.number().int().optional(),
+  departureAirport: z.number().int().positive().optional(),
+  arrivalAirport:z.number().int().positive().optional()
 }).superRefine((data, ctx) => {
   if (data.minPrice && data.maxPrice) {
     if(data.minPrice > data.maxPrice)
@@ -57,8 +57,8 @@ export const flighFilterSchema = z.object({
       })
   }
 
-  if(data.arrivalId && data.departureId){
-    if(data.arrivalId == data.departureId){
+  if(data.arrivalAirport && data.departureAirport){
+    if(data.arrivalAirport == data.departureAirport){
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message:"Arrival should be different from Departure",
