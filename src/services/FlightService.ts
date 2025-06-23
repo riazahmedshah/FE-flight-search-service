@@ -20,9 +20,10 @@ export class FlightService{
                 throw new Error('Departure and destination airports cannot be the same');
             }
 
-            const flight_number = generateFlightNumber()
 
-            return await FlightRepository.createFlight({...data, totalSeats:airplane.capacity,flight_number})
+            const flightNumber = generateFlightNumber();
+
+            return await FlightRepository.createFlight({...data,totalSeats:airplane.capacity,flight_number:flightNumber})
         } catch (error) {
             console.error(error)
         }

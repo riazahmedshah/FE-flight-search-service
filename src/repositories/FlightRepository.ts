@@ -7,12 +7,15 @@ export class FlightRepository{
         try {
             return await prisma.flight.create({
                 data:{
+                    flight_number:data.flight_number,
                     departure_airport_id: data.departure_airport_id,
                     destination_airport_id: data.destination_airport_id,
                     airplane_id:data.airplane_id,
                     departure:data.departure,
                     arrival: data.arrival,
-                    price:data.price
+                    price:data.price,
+                    totalSeats:data.totalSeats,
+                    bowdingGate:data.boardingGate
                 }
             })
         } catch (error) {
