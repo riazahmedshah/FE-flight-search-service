@@ -38,8 +38,7 @@ export class FlightRepository{
     static async getAllFlights(filter?: flightFilterProps) {
         try {
             return prisma.flight.findMany({
-                where: filter && Object.keys(filter).length > 0 ? {
-                    
+                where: filter ? {
                 AND: [
                     filter.minPrice ? { price: { gte: filter.minPrice } } : {},
                     filter.maxPrice ? { price: { lte: filter.maxPrice } } : {},
@@ -49,7 +48,7 @@ export class FlightRepository{
                     filter.arrivalAirport ? {
                     destination_airport_id:filter.arrivalAirport
                     }:{},
-                ].filter(condition => Object.keys(condition).length > 0)
+                ]
                 } : undefined,
                 
             });

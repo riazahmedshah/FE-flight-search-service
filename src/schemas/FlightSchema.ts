@@ -46,8 +46,8 @@ export const flightSchema = z.object({
 export const flighFilterSchema = z.object({
   minPrice: z.coerce.number().int().optional(),
   maxPrice: z.coerce.number().int().optional(),
-  departureAirport: z.number().int().positive().optional(),
-  arrivalAirport:z.number().int().positive().optional()
+  departureAirport: z.coerce.number().int().positive().optional(),
+  arrivalAirport:z.coerce.number().int().positive().optional()
 }).superRefine((data, ctx) => {
   if (data.minPrice && data.maxPrice) {
     if(data.minPrice > data.maxPrice)
