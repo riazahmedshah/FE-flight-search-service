@@ -24,7 +24,7 @@ export const getFlight = async (req:Request, res:Response) => {
     const id = Number(req.params.id);
     try {
         const flight = await FlightService.getFlight(id);
-        return ResponseHandler.created(res,{flight});
+        return ResponseHandler.json(res,{flight});
     } catch (error) {
         return ResponseHandler.json(res,{
             success:false,
