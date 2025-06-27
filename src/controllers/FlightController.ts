@@ -52,7 +52,7 @@ export const getAllFlights = async (req:Request, res:Response) => {
 
 export const updateFlight = async (req:Request, res:Response) => {
     const id = Number(req.params.id);
-    const totalSeats = req.body;
+    const totalSeats = req.body.totalSeats;
 
     try {
         const update = await FlightService.updateFlight(id, totalSeats);
