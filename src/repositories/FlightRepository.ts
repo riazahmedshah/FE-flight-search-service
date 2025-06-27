@@ -35,6 +35,18 @@ export class FlightRepository{
         }
     }
 
+    static async getFlight(id:number){
+        try {
+            return prisma.flight.findUnique({
+                where:{
+                    id
+                }
+            })
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
     static async getAllFlights(filter?: flightFilterProps) {
         try {
             return prisma.flight.findMany({
@@ -55,6 +67,7 @@ export class FlightRepository{
         } catch (error) {
             console.error(error)
         }
+
     }
 
     static async deleteFlight(id:number){
