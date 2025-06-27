@@ -20,6 +20,19 @@ export const createFlight = async (req:Request, res:Response) => {
     }
 }
 
+export const getFlight = async (req:Request, res:Response) => {
+    const id = Number(req.params.id);
+    try {
+        const flight = await FlightService.getFlight(id);
+        return ResponseHandler.created(res,{flight});
+    } catch (error) {
+        return ResponseHandler.json(res,{
+            success:false,
+            message:"ERROR_IN_GETTING_FLIGHT",
+        },500)
+    }
+}
+
 export const getAllFlights = async (req:Request, res:Response) => {
     const query = req.query
     const {success,data,error} = flighFilterSchema.safeParse(query);
@@ -32,7 +45,7 @@ export const getAllFlights = async (req:Request, res:Response) => {
     } catch (error) {
         return ResponseHandler.json(res,{
             success:false,
-            message:"ERROR_IN_CREATING_FLIGHT",
+            message:"ERROR_IN_GETTING_FLIGHTS",
         },500)
     }
 }

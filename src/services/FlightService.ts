@@ -29,6 +29,14 @@ export class FlightService{
         }
     }
 
+    static async getFlight(id:number){
+        try {
+            return FlightRepository.getFlight(id);
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
     static async getAllFlights(filter?:flightFilterProps){
         try {
             return FlightRepository.getAllFlights(filter)
