@@ -70,6 +70,21 @@ export class FlightRepository{
 
     }
 
+    static async uodateFlight(id:number,totalSeats:number){
+        try {
+            return await prisma.flight.update({
+                where:{
+                    id
+                },
+                data:{
+                    totalSeats
+                }
+            })
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
     static async deleteFlight(id:number){
         try {
             return await prisma.flight.delete({

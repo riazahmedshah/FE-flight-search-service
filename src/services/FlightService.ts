@@ -45,6 +45,14 @@ export class FlightService{
         }
     }
 
+    static async updateFlight(id:number, totalSeats:number){
+        try {
+            return FlightRepository.uodateFlight(id, totalSeats);
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
     static async deleteFlight(id:number){
         try {
             return await FlightRepository.deleteFlight(id)

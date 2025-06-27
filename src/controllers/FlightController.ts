@@ -50,6 +50,21 @@ export const getAllFlights = async (req:Request, res:Response) => {
     }
 }
 
+export const updateFlight = async (req:Request, res:Response) => {
+    const id = Number(req.params.id);
+    const totalSeats = req.body;
+
+    try {
+        const update = await FlightService.updateFlight(id, totalSeats);
+        return ResponseHandler.json(res,update);
+    } catch (error) {
+        return ResponseHandler.json(res,{
+            success:false,
+            message:"ERROR_IN_UPDATING_FLIGHTS",
+        },500)
+    }
+}
+
 export const deleteFlight = async (req:Request, res:Response) => {
     const id = Number(req.params.id);
     try {
