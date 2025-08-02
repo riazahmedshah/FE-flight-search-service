@@ -1,5 +1,6 @@
 import { Response } from "express";
 import { ZodIssue } from "zod";
+import { ServiceError } from "./error/ServiceError";
 
 export class ResponseHandler{
     static json(res:Response, data?:Record<string, any>, status = 200){
@@ -26,7 +27,19 @@ export class ResponseHandler{
         res.status(400).json({ errors })
     }
 
-    static error(res:Response, error:any){
-        ResponseHandler.json(res,error,500)
+    static error(res:Response, error:unknown){
+        if(error instanceof ServiceError){
+            const responseData = {
+                error: error.name,
+                message: error.message,
+                details: error.details
+            }
+            ResponseHandler.json(res, responseData, error.statusCode);
+        } else{
+            ResponseHandler.json(res,{
+                error: "INTERNAL_SERVER_ERROR",
+                message: "An unexpected error occurred"
+            },500);
+        }
     }
 }
