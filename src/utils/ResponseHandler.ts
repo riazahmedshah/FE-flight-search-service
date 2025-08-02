@@ -25,4 +25,8 @@ export class ResponseHandler{
 
         res.status(400).json({ errors })
     }
+
+    static error(res:Response, error:any){
+        ResponseHandler.json(res,error,500)
+    }
 }
