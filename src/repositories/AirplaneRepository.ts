@@ -11,15 +11,11 @@ export class AirplaneRepository{
     }
 
     static async getAirplane(id:number){
-        try {
-            return await prisma.airplane.findFirst({
-                where:{
-                    id
-                },
-            })
-        } catch (error) {
-            console.error(error);
-        }
+        return await prisma.airplane.findFirst({
+            where:{
+                id
+            },
+        })
     }
 
     static async deleteAirplane(id:number){
