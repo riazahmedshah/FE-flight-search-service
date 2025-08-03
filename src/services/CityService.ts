@@ -1,43 +1,59 @@
 import { CityRepository } from "../repositories/exports";
+import { ServiceError } from "../utils/error/ServiceError";
 
-export class CityService{
-    static async createCity(name:string){
+export class CityService {
+    static async createCity(name: string) {
         try {
-            return await CityRepository.createCity(name)
+            return await CityRepository.createCity(name);
         } catch (error) {
-            console.error(error)
+            throw new ServiceError(500, "CITY_CREATION_FAILED", "Failed to create city");
         }
     }
 
-    static async deleteCity(cityId:number){
+    static async deleteCity(cityId: number) {
         try {
-            return await CityRepository.deleteCity(cityId)
+            const result = await CityRepository.deleteCity(cityId);
+            if (!result) {
+                throw new ServiceError(404, "CITY_NOT_FOUND", `City with ID ${cityId} not found`);
+            }
+            return result;
         } catch (error) {
-            console.error(error)
+            if (error instanceof ServiceError) throw error;
+            throw new ServiceError(500, "CITY_DELETION_FAILED", `Failed to delete city ${cityId}`);
         }
     }
 
-    static async getCity(cityId:number){
+    static async getCity(cityId: number) {
         try {
-            return await CityRepository.getCity(cityId)
+            const city = await CityRepository.getCity(cityId);
+            if (!city) {
+                throw new ServiceError(404, "CITY_NOT_FOUND", `City with ID ${cityId} not found`);
+            }
+            return city;
         } catch (error) {
-            console.error(error)
+            if (error instanceof ServiceError) throw error;
+            throw new ServiceError(500, "CITY_RETRIEVAL_FAILED", `Failed to get city ${cityId}`);
         }
     }
 
-    static async updateCity(cityId:number, data:{name:string}){
+    static async updateCity(cityId: number, data: { name: string }) {
         try {
-            return await CityRepository.updateCity(cityId, data)
+            const updated = await CityRepository.updateCity(cityId, data);
+            if (!updated) {
+                throw new ServiceError(404, "CITY_UPDATE_FAILED", `City with ID ${cityId} not found`);
+            }
+            return updated;
         } catch (error) {
-            console.error(error)
+            if (error instanceof ServiceError) throw error;
+            throw new ServiceError(500, "CITY_UPDATE_ERROR", `Failed to update city ${cityId}`);
         }
     }
 
-    static async getAllCities(filter: string){
+    static async getAllCities(filter: string) {
         try {
             return await CityRepository.getAllCities(filter);
         } catch (error) {
-            console.error("GET_ALL_CITIES",error)
+            throw new ServiceError(500, "CITIES_RETRIEVAL_ERROR", "Failed to retrieve cities");
         }
     }
 }
