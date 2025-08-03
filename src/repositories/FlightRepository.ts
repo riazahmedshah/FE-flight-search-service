@@ -70,7 +70,7 @@ export class FlightRepository{
 
     }
 
-    static async uodateFlight(id:number,totalSeats:number){
+    static async updateFlight(id:number,totalSeats:number){
         try {
             return await prisma.flight.update({
                 where:{
